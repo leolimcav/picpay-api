@@ -1,10 +1,11 @@
 const express = require("express");
 const mongoose = require("mongoose");
+require("dotenv").config();
 
 const app = express();
 
 mongoose.connect(
-  "mongodb+srv://apipicpay:picpay@cluster0-tiqcl.mongodb.net/test?retryWrites=true&w=majority",
+  `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@cluster0-tiqcl.mongodb.net/test?retryWrites=true&w=majority`,
   {
     useNewUrlParser: true,
     useUnifiedTopology: true,
@@ -15,6 +16,6 @@ app.use(express.json());
 
 app.use(require("./routes"));
 
-app.listen(3000, () => {
+app.listen(process.env.PORT, () => {
   console.log("Rodando");
 });
