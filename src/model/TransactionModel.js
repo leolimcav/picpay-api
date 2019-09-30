@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 
 const TransactionModel = new mongoose.Schema(
   {
@@ -15,7 +16,7 @@ const TransactionModel = new mongoose.Schema(
       default: Date.now(),
       required: true
     },
-    value: Decimal128
+    value: Schema.Types.Decimal128
   },
   { timestamps: true }
 );

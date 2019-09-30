@@ -2,13 +2,16 @@ const mongoose = require("mongoose");
 
 const ConsumerModel = new mongoose.Schema(
   {
-    user_id: {
-      type: Number,
-      required: true
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+      unique: true
     },
     username: {
       type: String,
-      required: true
+      required: true,
+      unique: true
     }
   },
   { timestamps: true }

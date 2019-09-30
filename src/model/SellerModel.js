@@ -16,11 +16,13 @@ const SellerModel = new mongoose.Schema(
     },
     username: {
       type: String,
-      required: true
+      required: true,
+      unique: true
     },
-    user_id: {
-      type: Number,
-      required: true
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      unique: true
     }
   },
   { timestamps: true }

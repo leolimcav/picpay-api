@@ -1,5 +1,4 @@
 const UserModel = require("../model/UserModel");
-const querystring = require("querystring");
 
 module.exports = {
   async index(req, res) {
@@ -28,5 +27,9 @@ module.exports = {
     res.statusCode = 204;
     return res.json(res.statusCode);
   },
-  async update(req, res) {}
+  async update(req, res) {
+    const updatedUser = req.body;
+    await UserModel.findByIdAndUpdate(req.params.id, updatedUser);
+    res.json(updatedUser);
+  }
 };
