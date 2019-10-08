@@ -1,35 +1,46 @@
-const UserModel = require("../model/UserModel");
+const User = require("../model/UserModel");
 
 module.exports = {
   async index(req, res) {
     if (req.query.name !== undefined) {
-      const Users = await UserModel.find().where({
+      const Users = await User.find().where({
         full_name: { $regex: `${req.query.name}.*`, $options: "-i" }
       });
       return res.json(Users);
     }
-    const Users = await UserModel.find().sort({ full_name: "asc" });
+    const Users = await User.find().sort({ full_name: "asc" });
     if (res.statusCode === 200) return res.json(Users);
     else if (res.statusCode === 500)
       return res.send("Status 500: Erro interno do servidor!");
   },
   async findUserById(req, res) {
-    const User = await UserModel.findById(req.params.id);
+    const User = await User.findById(req.params.id);
     return res.json(User);
   },
   async store(req, res) {
-    const newUser = req.body;
-    await UserModel.create(newUser);
-    return res.json(res.statusCode);
+    const { full_name, cpf, email, password, phone_number } = req.body;
+    const user = await User.create({
+      full_name,
+      cpf,
+      email,
+      password,
+      phone_number
+    });
+    return res.json(user);
   },
   async destroy(req, res) {
-    await UserModel.findByIdAndDelete(req.params.id);
-    res.statusCode = 204;
-    return res.json(res.statusCode);
+    const user = await User.findByIdAndDelete(req.params.id);
+    return res.json(user);
   },
   async update(req, res) {
-    const updatedUser = req.body;
-    await UserModel.findByIdAndUpdate(req.params.id, updatedUser);
+    const { full_name, cpf, email, password, phone_number } = req.body;
+    const updatedUser = await User.findByIdAndUpdate(req.params.id, {
+      full_name,
+      cpf,
+      email,
+      password,
+      phone_number
+    });
     res.json(updatedUser);
   }
 };

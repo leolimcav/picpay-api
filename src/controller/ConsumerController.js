@@ -1,23 +1,19 @@
-const ConsumerModel = require("../model/ConsumerModel");
-const SellerModel = require("../model/SellerModel");
+const Consumer = require("../model/ConsumerModel");
+const Seller = require("../model/SellerModel");
 
 module.exports = {
   async store(req, res) {
-    const consumer = req.body;
-    const seller = await SellerModel.findOne({ user: consumer.user });
-    console.log(seller);
-    if (!seller) {
-      console.log("Primeiro if");
-      await ConsumerModel.create(consumer);
-      return res.json(consumer);
-    } else if (seller.username !== consumer.username) {
-      console.log("Segundo if");
-      console.log(seller.username);
-      await ConsumerModel.create(consumer);
-      return res.json(consumer);
-    } else if (seller.username === consumer.username) {
-      console.log(seller.username);
-      return res.status(400).send("Username already exist");
+    const { username } = req.body;
+    const { user_id } = req.headers;
+    const seller = await Seller.findOne({ user: user_id });
+
+    if (seller && seller.username === username) {
+      return res.json({ code: 201, msg: "Username already in use" });
     }
+
+    const consumer = await Consumer.create({ username, user: user_id });
+    await consumer.populate("user").execPopulate();
+
+    return res.json(consumer);
   }
 };

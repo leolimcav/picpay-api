@@ -7,7 +7,7 @@ const routes = route();
 
 // ------------- Transactions -------------------------------------
 // Cadastra uma nova transação entre usuários
-routes.post("/transacations", (req, res) => {});
+routes.post("/transactions", (req, res) => {});
 
 // Retorna detalhes de uma transação
 routes.get("/transactions/:transaction_id", (req, res) => {});
@@ -26,9 +26,11 @@ routes.post("/users", UserController.store);
 routes.put("/users/:id", UserController.update);
 
 // Cadastra um novo usuário consumidor
+// routes.post("/users/:user_id/consumers", ConsumerController.store);
 routes.post("/users/consumers", ConsumerController.store);
 
 // Cadastra um novo usuário lojista
+// routes.post("/users/:user_id/sellers", SellerController.store);
 routes.post("/users/sellers", SellerController.store);
 
 routes.delete("/users/:id", UserController.destroy);

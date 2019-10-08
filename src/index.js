@@ -5,7 +5,7 @@ require("dotenv").config();
 const app = express();
 
 mongoose.connect(
-  `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@cluster0-tiqcl.mongodb.net/test?retryWrites=true&w=majority`,
+  `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@cluster0-tiqcl.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`,
   {
     useNewUrlParser: true,
     useUnifiedTopology: true,
